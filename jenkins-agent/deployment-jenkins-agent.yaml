@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-agent
+  namespace: navigation
+  labels:
+    app: jenkins-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins-agent
+  template:
+    metadata:
+      labels:
+        app: jenkins-agent
+    spec:
+      containers:
+      - name: jenkins-agent
+        image: 192.168.205.10:5000/jenkins-agent:jdk11
+        imagePullPolicy: Always
+        env:
+        - name: JENKINS_AGENT_SSH_PUBKEY
+          value: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDZuzDRX+15czZPMqAT7NGL+Yeb7hi+9zz3GQwNi1v82PC39De0auD47lenDifNt+XVddIMceOTsRCdb/EnssPf9c/18cTsdRYxlF/06uksbwRXBV8sDy34CB4i0BT/jW0GXPWvr8g+wB8eh5LbJDRkzkHyfbAlqg//IzDhRvTbnt3uLrbhPE/w35NiDie64WqH8Wna1X29iGjnXDytA8mkBzwGRB03XXao/+Kn5jiHWDpGRec+usYWeTjGAVq2YNNuzf3dXRjqMVZjvrUDxYrgZmwiR+stxwNxLB5Jj3tRLewncdmV+rLfFZRV4JPHhepDsvihBapEp6R66Ko3PMJ4caeI7Zf1y5wwv463ycPugTpedkjKJhtzyTvH0giPXzipC49+c6b3JjZejet0zD749YD95DiRT7XHAueAu9AD0Vy+bJsbdgGQ+Z1v+8ZzitDbcSceGK22X0pvl+7gXavKBmDQjEzuGGuAQmLrK2YFqNi1FPJJo7HVKcmNWSAXBWAyzvhHceyZopo3f5PsY1r0gUboNi3M4vX8l5w7kvxDQi7OHm/rf+z0x6s1ver8xOX1XXBR1zcBmiRdaB6fiHrsSkpm/lsxC77WpGXV2tAv8+tI6tP439AIeqaK5HyN4nntALHPdhG287f5VhRDiQr32JozTxzTvCgAdIXadiWzHw== segues91@gmail.com"
+        ports:
+          - name: ssh-port
+            containerPort: 22
